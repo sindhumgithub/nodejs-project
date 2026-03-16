@@ -18,6 +18,16 @@ pipeline {
             }
         }
 
+        stage('Login to AWS') {
+            steps {
+                withCredentials([string(credentialsId: 'AWS-SecretKey', variable: 'AWS_SECRET')]) {
+                    sh '''
+                    export AWS_SECRET_ACCESS_KEY=$AWS_SECRET
+                    '''
+                }
+            }
+        }
+
         stage ('Push to ECR') {
             steps {
                 sh '''
